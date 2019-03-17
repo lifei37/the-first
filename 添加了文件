@@ -1,0 +1,31 @@
+[33mcommit 160a626c3f5cc125656174767ca236a3f821ea70[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: lifei <375210307@qq.com>
+Date:   Sun Mar 17 22:29:17 2019 +0800
+
+    添加了a文件
+
+[33mcommit a102679175d000a43ce16df0f4dd2ea7ebace37f[m
+Author: lifei <375210307@qq.com>
+Date:   Sun Mar 17 22:19:15 2019 +0800
+
+    第一次提交
+
+[33mcommit 266d657dd17786ac683d2ee8b12987ba0092f4fe[m
+Merge: 78ec860 dc45764
+Author: H0-0H <1749883921@qq.com>
+Date:   Tue Jun 5 14:56:15 2018 +0800
+
+    Merge branch 'master' of https://github.com/H0-0H/TmSccity_models
+    这是第一次与线上进行合并，加入了一个线上的reamdmin文件
+
+[33mcommit 78ec86020c77830d4e89bb38f9f41d9a5314d784[m
+Author: H0-0H <1749883921@qq.com>
+Date:   Tue Jun 5 11:59:06 2018 +0800
+
+    这是TmSccity_models第一版，内含完成的接口有1、课程主页接口;2、课程详情页接口;3、新闻主页接口;4、新闻详情页接口;5、登录接口（做了登录验证auth文件）
+
+[33mcommit dc4576456b723c40bf0fee20f42e47137a997667[m
+Author: hewm <1749883921@qq.com>
+Date:   Tue Jun 5 11:56:58 2018 +0800
+
+    Initial commit
