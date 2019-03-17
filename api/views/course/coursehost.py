@@ -13,17 +13,18 @@
         1、
         2、
 """
-from api.models import *
+from api import models
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet, ViewSetMixin
-from api.serializers.coursehost import *
+from rest_framework.viewsets import GenericViewSet, ViewSetMixin,ModelViewSet,mixins
+from api.serializers.coursehost import CourseViewSetSerializers,CourseDetailViewSetSerializers
 
 
 # Create your views here.
 
 class CourseViewSet(ViewSetMixin, APIView):
+
     def list(self, request, *args, **kwargs):
         """
         课程主页显示资源
@@ -34,8 +35,9 @@ class CourseViewSet(ViewSetMixin, APIView):
         """
         ret = {'code': 1000, 'data': None}
         try:
-            queryset = Course.objects.all()
-            ser =CourseViewSetSerializers(instance=queryset, many=True)
+            # 在公司加分页
+            queryset = models.Course.objects.all()
+            ser = CourseViewSetSerializers(instance=queryset, many=True)
             ret['data'] = ser.data
         except Exception as e:
             ret['code'] = 1001
@@ -46,10 +48,17 @@ class CourseViewSet(ViewSetMixin, APIView):
         ret = {'code': 1000, 'data': None}
         try:
             pk = kwargs.get('pk')
-            obj = CourseDetail.objects.filter(id=pk).first()
+            obj = models.CourseDetail.objects.filter(id=pk).first()
             ser = CourseDetailViewSetSerializers(instance=obj, many=False)
             ret['data'] = ser.data
         except Exception as e:
             ret['code'] = 1001
             ret['error'] = '未获取到资源'
         return Response(ret)
+
+#
+#
+# class CourseViewSet(mixins.ListModelMixin,mixins.RetrieveModelMixin,GenericViewSet):
+#     queryset = models.Course.objects.all()
+#     serializer_class = CourseViewSetSerializers
+

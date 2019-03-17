@@ -58,15 +58,6 @@ class NewsPapers(ViewSetMixin, APIView):
 
 
 class AgreeView(ViewSetMixin, APIView):
-    def list(self, request, *args, **kwargs):
-        """
-        列表接口
-        :param request:
-        :param args:
-        :param kwargs:
-        :return:
-        """
-        pass
 
     def post(self, request, *args, **kwargs):
         """
@@ -79,9 +70,16 @@ class AgreeView(ViewSetMixin, APIView):
         ret = {'code': 1000, 'data': None}
         try:
             pk = kwargs.get('pk')
+            # 方式一：更新赞数
             obj = Article.objects.filter(id=pk).first()
             obj.agree_num = obj.agree_num + 1
             obj.save()
+            # 方式二：更新赞数
+            # F，更新数据库字段
+            # Q, 构造复杂条件
+            # from django.db.models import F,Q
+            # v = Article.objects.filter(id=pk).update(agree_num=F("agree_num") + 1)
+            # print(v)
             ret['data'] = obj.agree_num
         except Exception as e:
             ret['code'] = 1001

@@ -12,31 +12,43 @@
         2、
     增加功能时间 :
 """
+import uuid
 
-from api.models import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
-import uuid
+from django.core.exceptions import ObjectDoesNotExist
+
+from api.models import *
+from utils.response import BaseResponse
 
 
 class loginView(APIView):
+    """
+    用于用户认证相关接口
+    """
+
     def post(self, request, *args, **kwargs):
         """
         用户认证
-        :param request:
-        :param args:
-        :param kwargs:
+        :param request: 请求相关的数据
+        :param args: URL传参
+        :param kwargs: URL关键字传参
         :return:
         """
-        ret = {"code": 1000}
-        user = request.data.get('user')
-        pwd = request.data.get('pwd')
-        user = Account.objects.filter(username=user, password=pwd).first()
-        if not user:
-            ret['code'] = 1001
-            ret['error'] = '用户名或密码错误'
-        else:
+        ret = BaseResponse()
+        try:
+            user = request.data.get('user')
+            pwd = request.data.get('pwd')
+            user = Account.objects.filter(username=user, password=pwd).first()
+            if not user:
+                ret.code = 1001
+                ret.error = '用户名或密码错误'
+                return Response(ret)
+
             uid = str(uuid.uuid4())
             UserAuthToken.objects.update_or_create(user=user, defaults={'token': uid})
-            ret['token'] = uid
-        return Response(ret)
+            ret.data = uid
+        except Exception as e:
+            ret.code = 1003
+
+        return Response(ret.dict)
